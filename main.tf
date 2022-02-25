@@ -18,7 +18,7 @@ data "aws_iam_policy_document" "policy" {
         sid = ""
         effect = "Allow"
         
-        principals = {
+        principals {
             identifiers = ["lambda.amazonaws.com"]
             type = "service"
         }
