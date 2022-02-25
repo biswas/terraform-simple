@@ -1,4 +1,4 @@
 variable "aws_region" {
-    description = "Relevant cloud provider region."
-    default = "us-east-1"
+  description = "Relevant cloud provider region."
+  default     = "us-east-1"
 }
