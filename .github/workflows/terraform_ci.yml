@@ -3,7 +3,9 @@ name: 'Terraform CI'
 on:
   push:
     branches:
-    - main
+      - main
+    paths-ignore:
+      - '**/README.md'
 
 env:
   AWS_REGION: us-east-1
