@@ -5,6 +5,9 @@ on:
     branches:
     - main
 
+env:
+  AWS_REGION: us-east-1
+
 jobs:
   terraform:
     name: 'Terraform'
@@ -18,6 +21,13 @@ jobs:
         shell: bash
 
     steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: ${env.AWS_REGION}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout source code
       uses: actions/checkout@v2
@@ -29,6 +39,7 @@ jobs:
       #  cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
     
     # Lint terraform files
+    # <https://github.com/terraform-linters/setup-tflint>
     - name: Setup TFLint
       #run: |
       #  curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
