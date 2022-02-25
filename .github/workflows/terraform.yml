@@ -47,7 +47,8 @@ name: 'Terraform'
 on:
   push:
     branches:
-    - main
+    #- main
+    - deactivate-this-workflow
   pull_request:
 
 jobs:
