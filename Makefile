@@ -1,5 +1,3 @@
-destroy:|
-	terraform destroy
 init:|
 	terraform init
 validate:|
@@ -9,4 +7,4 @@ plan:|
 apply:|
 	terraform apply
 	
-build: destroy init validate plan apply
+build: init validate plan apply
