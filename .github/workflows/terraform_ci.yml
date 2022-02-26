@@ -57,9 +57,7 @@ jobs:
       
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: |
-        terraform import aws_iam_role.iam_for_lambda iam_for_lambda
-        terraform init
+      run: terraform init
 
     # Checks that all Terraform configuration files adhere to a canonical format
     # - name: Terraform Format
