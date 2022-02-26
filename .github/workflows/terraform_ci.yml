@@ -74,5 +74,5 @@ jobs:
       run: |
         terraform apply -auto-approve
         echo "stacks creation successful, now destroying..."
-        terraform destroy
+        terraform destroy -auto-approve
       
