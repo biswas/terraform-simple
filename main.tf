@@ -27,8 +27,8 @@ data "aws_iam_policy_document" "policy" {
 }
 
 # Resources
-resource "aws_iam_role" "lambda_iam" {
-  name               = "lambda_iam"
+resource "aws_iam_role" "lambda_iam2" {
+  name               = "lambda_iam2"
   assume_role_policy = data.aws_iam_policy_document.policy.json
 }
 
@@ -36,7 +36,7 @@ resource "aws_lambda_function" "lambda" {
   function_name    = "handler1"
   filename         = data.archive_file.zip.output_path
   source_code_hash = data.archive_file.zip.output_base64sha256
-  role             = aws_iam_role.lambda_iam.arn
+  role             = aws_iam_role.lambda_iam2.arn
   handler          = "handler1.handler"
   runtime          = "python3.6"
 }
