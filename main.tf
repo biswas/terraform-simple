@@ -63,7 +63,7 @@ resource "aws_lambda_function" "lambda" {
 
 resource "aws_cloudwatch_log_group" "lgroup1" {
   name              = "/aws/lambda/${var.lambda_function_name}"
-  retention_in_days = 2
+  retention_in_days = 3
 }
 
 resource "aws_iam_policy" "lambda_logging" {
