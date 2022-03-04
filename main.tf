@@ -12,7 +12,7 @@ data "archive_file" "zip" {
   output_path = "lambda.zip"
 }
 
-# IAM policy
+# IAM policy document for lambda
 data "aws_iam_policy_document" "policy" {
   statement {
     sid    = ""
@@ -23,6 +23,22 @@ data "aws_iam_policy_document" "policy" {
       type        = "Service"
     }
     actions = ["sts:AssumeRole"]
+  }
+}
+
+# IAM policy document for cloudwatch logging
+data "aws_iam_policy_doc_logging" "policy" {
+  statement {
+    sid    = ""
+    effect = "Allow"
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
+    ]
+    resources = [
+      "arn:aws:logs:*:*:*"
+    ]
   }
 }
 
@@ -39,4 +55,25 @@ resource "aws_lambda_function" "lambda" {
   role             = aws_iam_role.lambda_iam3.arn
   handler          = "handler1.handler"
   runtime          = "python3.6"
+  depends_on = [
+    aws_iam_role_policy_attachment.lambda_logs,
+    aws_cloudwatch_log_group.lgroup1
+  ]
+}
+
+resource "aws_cloudwatch_log_group" "lgroup1" {
+  name              = "/aws/lambda/${aws_lambda_function.lambda.function_name}"
+  retention_in_days = 2
+}
+
+resource "aws_iam_policy" "lambda_logging" {
+  name               = "lambda_logging"
+  path               = "/"
+  description        = "IAM policy for logging from a lambda"
+  assume_role_policy = data.aws_iam_policy_doc_logging.policy.json
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_logs" {
+  role       = aws_iam_role.lambda_iam3.name
+  policy_arn = aws_iam_policy.lambda_logging.arn
 }
