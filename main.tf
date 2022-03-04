@@ -67,10 +67,10 @@ resource "aws_cloudwatch_log_group" "lgroup1" {
 }
 
 resource "aws_iam_policy" "lambda_logging" {
-  name               = "lambda_logging"
-  path               = "/"
-  description        = "IAM policy for logging from a lambda"
-  assume_role_policy = data.aws_iam_policy_document.policy_logging.json
+  name        = "lambda_logging"
+  path        = "/"
+  description = "IAM policy for logging from a lambda"
+  policy      = data.aws_iam_policy_document.policy_logging.json
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
